@@ -1,0 +1,78 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "${PROJECT_NAME}_traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "traefik.docker.network=proxy"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - "proxy"
+
+  nginx:
+    image: "nginx:1.21-alpine"
+    container_name: "${PROJECT_NAME}_nginx"
+    depends_on:
+      - "php"
+    volumes:
+      - "./api:/var/www/html:ro"
+      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "logs-nginx:/var/log/nginx:rw"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`${PROJECT_NAME}.localhost`)"
+      - "traefik.http.routers.nginx.entrypoints=web"
+      - "traefik.docker.network=proxy"
+    networks:
+      - "proxy"
+      - "internal"
+
+  php:
+    build: "./fpm"
+    image: "php:8.0-fpm-alpine"
+    container_name: "${PROJECT_NAME}_php"
+    env_file: .env
+    depends_on:
+      - "db"
+    volumes:
+      - "./api:/var/www/html:rw"
+      - "./fpm/xdebug_install.sh:/etc/xdebug_install.sh:ro"
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - "internal"
+
+  db:
+    image: "mariadb:10.6"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro"
+    environment:
+      - "MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}"
+      - "MARIADB_USER=${MARIADB_USER}"
+      - "MARIADB_PASSWORD=${MARIADB_PASSWORD}"
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - "proxy"
+      - "internal"
+
+volumes:
+  logs-nginx:
+
+networks:
+  proxy:
+    external: true
+  internal:
+

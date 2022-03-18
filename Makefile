@@ -1,0 +1,46 @@
+include .env
+export
+
+start:
+	docker-compose up -d --remove-orphans
+
+stop:
+	docker-compose stop
+
+down:
+	docker-compose down -v
+
+restart: stop start
+
+logs:
+	docker-compose logs -f
+
+sql:
+	docker-compose exec db mysql -uroot -p$(MARIADB_ROOT_PASSWORD)
+
+ssh:
+	docker-compose exec php sh
+
+prune:
+	docker-compose down -v
+	docker volume prune
+
+build:
+	docker-compose build
+
+phpv:
+	docker-compose exec php php -v
+
+xdebug:
+	docker-compose exec php sh "/etc/xdebug_install.sh"
+
+# Symfony commands
+sf-routes:
+	docker-compose exec php bin/console debug:router
+
+sf-env:
+	docker-compose exec php bin/console debug:container --env-vars
+
+sf-params:
+	docker-compose exec php bin/console debug:container --parameters
+

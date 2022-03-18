@@ -44,3 +44,9 @@ sf-env:
 sf-params:
 	docker-compose exec php bin/console debug:container --parameters
 
+sf-migration:
+	docker-compose exec php bin/console make:migration
+
+sf-migrate:
+	docker-compose exec php bin/console doctrine:migrations:migrate
+

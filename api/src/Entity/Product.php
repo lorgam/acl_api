@@ -27,7 +27,7 @@ class Product
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity=Category::class, inversedBy="products", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="products")
      */
     private $category;
 

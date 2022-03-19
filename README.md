@@ -18,6 +18,7 @@ The API runs locally on docker compose containers and makes use of make commands
 - `make sf-routes` to show the routes Symfony has registered
 - `make sf-env` to show the environment variables in use
 - `make sf-params` to show the parameters in use
+- `make sf-load-fixtures` to load the local data for development
 
 The file named `.env` in the root folder has the environment variables for the development machines
 

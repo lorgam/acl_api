@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Product
 {
 
-    const CURRENCIES = ['EUR', 'USD'];
+    public const CURRENCIES = ['EUR', 'USD'];
 
     /**
      * @ORM\Id

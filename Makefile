@@ -50,3 +50,6 @@ sf-migration:
 sf-migrate:
 	docker-compose exec php bin/console doctrine:migrations:migrate
 
+sf-load-fixtures:
+	docker-compose exec php bin/console doctrine:fixtures:load
+

@@ -30,6 +30,15 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @Route("/featured", methods={"GET"}, name="featured")
+     */
+    public function featyredProducts(Request $request): JsonResponse
+    {
+        $products = $this->repo->getFeaturedProducts();
+        return new JsonResponse($products);
+    }
+
+    /**
      * @Route("/", methods={"GET"}, name="get")
      */
     public function getProducts(): Response

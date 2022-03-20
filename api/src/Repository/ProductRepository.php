@@ -44,4 +44,15 @@ class ProductRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function getFeaturedProducts(): array
+    {
+        return $this
+            ->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->select('p.id, p.name, p.price, p.currency, c.name category_name')
+            ->where('p.featured = true')
+            ->getQuery()
+            ->getArrayResult();
+    }
 }

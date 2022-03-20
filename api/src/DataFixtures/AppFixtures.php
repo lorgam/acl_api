@@ -26,7 +26,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 190; $i++) {
             $product = new Product();
             $product->setName("product{$i}");
-            $product->setPrice(mt_rand(10, 1000));
+            $product->setPrice(1000 * (mt_rand() / mt_getrandmax()));
             if (boolval(rand(0, 1))) {
                 $product->setCategory($categories[rand(0, count($categories) - 1)]);
             }

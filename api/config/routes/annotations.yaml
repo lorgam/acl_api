@@ -3,7 +3,7 @@ controllers:
     type: annotation
 
 apiv1:
-    resource: ../../src/Controller/Api/V1
+    resource: ../../src/Controller/Api/V1/
     type: annotation
     prefix: /api/v1
 

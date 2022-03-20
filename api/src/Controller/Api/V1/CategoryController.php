@@ -34,7 +34,7 @@ class CategoryController extends AbstractController
      */
     public function getCategories(): JsonResponse
     {
-        return $this->categoryToJsonResponse($this->repo->findAll(), ['products']);
+        return $this->categoryToJsonResponse($this->repo->findAll());
     }
 
     /**
@@ -44,7 +44,7 @@ class CategoryController extends AbstractController
     {
         $category = $this->serializer->deserialize($request->getContent(), Category::class, 'json');
         $this->repo->add($category);
-        return $this->categoryToJsonResponse($category, ['products']);
+        return $this->categoryToJsonResponse($category);
     }
 
     /**
@@ -52,7 +52,7 @@ class CategoryController extends AbstractController
      */
     public function getCategory(?Category $category): JsonResponse
     {
-        return $this->categoryToJsonResponse($category, ['products']);
+        return $this->categoryToJsonResponse($category);
     }
 
     /**
@@ -65,7 +65,7 @@ class CategoryController extends AbstractController
             $this->repo->add($category);
         }
 
-        return $this->categoryToJsonResponse($category, ['products']);
+        return $this->categoryToJsonResponse($category);
     }
 
     /**
@@ -77,7 +77,7 @@ class CategoryController extends AbstractController
         return new JsonResponse(['deleted' => true]);
     }
 
-    private function categoryToJsonResponse(null|array|Category $data, array $ignoredAttributes = []): JsonResponse
+    private function categoryToJsonResponse(null|array|Category $data, array $groups = ['rest']): JsonResponse
     {
         if ($data == null) return new JsonResponse([], Response::HTTP_NO_CONTENT);
 
@@ -85,7 +85,7 @@ class CategoryController extends AbstractController
             $this->serializer->serialize(
                 $data,
                 'json',
-                [AbstractNormalizer::IGNORED_ATTRIBUTES => $ignoredAttributes]
+                ['groups' => $groups]
             )
         );
     }

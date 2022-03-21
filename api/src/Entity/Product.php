@@ -26,6 +26,7 @@ class Product
      * @Groups({"rest"})
      *
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
@@ -41,6 +42,7 @@ class Product
      * @Groups({"rest"})
      *
      * @ORM\Column(type="float")
+     * @Assert\NotNull
      */
     private $price;
 
@@ -56,6 +58,7 @@ class Product
      * @Groups({"rest"})
      *
      * @ORM\Column(type="boolean")
+     * @Assert\NotNull
      */
     private $featured;
 

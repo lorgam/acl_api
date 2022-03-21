@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
-
-// @TODO: Validate Json Structure, Headers...
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/category", name="api_category_")
@@ -22,17 +21,19 @@ class CategoryController extends AbstractController
 
     private $serializer;
     private $repo;
+    private $validator;
 
-    public function __construct(SerializerInterface $serializer, CategoryRepository $repo)
+    public function __construct(SerializerInterface $serializer, CategoryRepository $repo, ValidatorInterface $validator)
     {
         $this->serializer = $serializer;
         $this->repo = $repo;
+        $this->validator = $validator;
     }
 
     /**
      * @Route("/", methods={"GET"}, name="get")
      */
-    public function getCategories(): JsonResponse
+    public function getCategories(): Response
     {
         return $this->categoryToJsonResponse($this->repo->findAll());
     }
@@ -40,9 +41,20 @@ class CategoryController extends AbstractController
     /**
      * @Route("/", methods={"POST"}, name="post")
      */
-    public function postCategoy(Request $request): JsonResponse
+    public function postCategoy(Request $request): Response
     {
-        $category = $this->serializer->deserialize($request->getContent(), Category::class, 'json');
+        try {
+            $category = $this->serializer->deserialize($request->getContent(), Category::class, 'json');
+        } catch (\UnexpectedValueException $e) {
+            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+        }
+
+        //validate the category
+        $errors = $this->validator->validate($category);
+        if (count($errors) > 0) {
+            return new Response((string) $errors, Response::HTTP_BAD_REQUEST);
+        }
+
         $this->repo->add($category);
         return $this->categoryToJsonResponse($category);
     }
@@ -50,7 +62,7 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}", methods={"GET"}, name="get_id")
      */
-    public function getCategory(?Category $category): JsonResponse
+    public function getCategory(?Category $category): Response
     {
         return $this->categoryToJsonResponse($category);
     }
@@ -58,10 +70,20 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}", methods={"PUT"}, name="put_id")
      */
-    public function putCategory(Request $request, ?Category $category): JsonResponse
+    public function putCategory(Request $request, ?Category $category): Response
     {
         if ($category != null) {
-            $this->serializer->deserialize($request->getContent(), Category::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $category]);
+            try {
+                $this->serializer->deserialize($request->getContent(), Category::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $category]);
+            } catch (\UnexpectedValueException $e) {
+                return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
+            }
+            //validate the category
+            $errors = $this->validator->validate($category);
+            if (count($errors) > 0) {
+                return new Response((string) $errors, Response::HTTP_BAD_REQUEST);
+            }
+
             $this->repo->add($category);
         }
 
@@ -71,15 +93,17 @@ class CategoryController extends AbstractController
     /**
      * @Route("/{id}", methods={"DELETE"}, name="delete_id")
      */
-    public function deleteCategory(?Category $category): JsonResponse
+    public function deleteCategory(?Category $category): Response
     {
+        if ($category == null) return $this->categoryToJsonResponse(null); // Return standard not found response
+
         $this->repo->remove($category);
         return new JsonResponse(['deleted' => true]);
     }
 
-    private function categoryToJsonResponse(null|array|Category $data, array $groups = ['rest']): JsonResponse
+    private function categoryToJsonResponse(null|array|Category $data, array $groups = ['rest']): Response
     {
-        if ($data == null) return new JsonResponse([], Response::HTTP_NO_CONTENT);
+        if ($data == null) return new Response('Not found', Response::HTTP_NO_CONTENT);
 
         return JsonResponse::fromJsonString(
             $this->serializer->serialize(

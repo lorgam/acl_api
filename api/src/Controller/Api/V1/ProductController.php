@@ -32,9 +32,10 @@ class ProductController extends AbstractController
     /**
      * @Route("/featured", methods={"GET"}, name="featured")
      */
-    public function featyredProducts(Request $request): JsonResponse
+    public function featuredProducts(Request $request): JsonResponse
     {
-        $products = $this->repo->getFeaturedProducts();
+        $currency = $request->query->get('currency', null); // @TODO: Validate this parameter
+        $products = ($currency == null ? $this->repo->getFeaturedProducts() : $this->repo->getFeaturedProductsCurrencyConverted($currency));
         return new JsonResponse($products);
     }
 

@@ -3,9 +3,10 @@
 ## Configuration
 
 The API runs locally on docker compose containers and makes use of make commands to control the containers, start the machine with `make start` and load the database with `make install`
-Access the web server at [`http://acl_api.localhost/`](http://acl_api.localhost/) and the router panel at [`http://localhost:8080/`](http://localhost:8080/).
+Access the web server at [`http://acl_api.localhost/`](http://acl_api.localhost/) and the router panel at [`http://localhost:8080/`](http://localhost:8080/)
 
 The file named `.env` in the root folder has the environment variables for the development machines, the variable named `PROJECT_NAME` contains the project name and is used for the local URL of the development server
+The variables whose value is `OverrideMeInLocal` like `EXCHANGERATES_API_KEY` need to be configured in the .env.local file
 The code for the api is located in the api folder
 
 ### Commands for the development machines

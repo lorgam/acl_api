@@ -4,6 +4,7 @@ namespace App\Controller\Api\V1;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Service\CurrencyConversor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,11 +23,13 @@ class CategoryController extends AbstractController
 
     private $serializer;
     private $repo;
+    private $currencyConversor;
 
-    public function __construct(SerializerInterface $serializer, CategoryRepository $repo)
+    public function __construct(SerializerInterface $serializer, CategoryRepository $repo, CurrencyConversor $currencyconversor)
     {
         $this->serializer = $serializer;
         $this->repo = $repo;
+        $this->currencyConversor = $currencyConversor;
     }
 
     /**

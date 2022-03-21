@@ -9,6 +9,13 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    private array $currencies;
+
+    public function __construct(array $currencies)
+    {
+        $this->currencies = $currencies;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // Categories
@@ -30,7 +37,7 @@ class AppFixtures extends Fixture
             if (boolval(rand(0, 1))) {
                 $product->setCategory($categories[rand(0, count($categories) - 1)]);
             }
-            $product->setCurrency(Product::CURRENCIES[rand(0, count(Product::CURRENCIES) - 1)]);
+            $product->setCurrency($this->currencies[rand(0, count($this->currencies) - 1)]);
             $product->setFeatured(boolval(rand(0, 1)));
             $manager->persist($product);
         }

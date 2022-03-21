@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use App\Validator as CustomAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -12,9 +13,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Product
 {
-
-    public const CURRENCIES = ['EUR', 'USD'];
-
     /**
      * @Groups({"rest"})
      *
@@ -50,7 +48,7 @@ class Product
      * @Groups({"rest"})
      *
      * @ORM\Column(type="string", length=3)
-     * @Assert\Choice(choices=Product::CURRENCIES, message="Currency not valid")
+     * @CustomAssert\ValidCurrency
      */
     private $currency;
 

@@ -34,6 +34,12 @@ phpv:
 xdebug:
 	docker-compose exec php sh "/etc/xdebug_install.sh"
 
+install: c-install sf-migrate sf-load-fixtures
+
+# Composer commands
+c-install:
+	docker-compose exec php composer install
+
 # Symfony commands
 sf-routes:
 	docker-compose exec php bin/console debug:router

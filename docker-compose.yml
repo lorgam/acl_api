@@ -41,7 +41,9 @@ services:
     build: "./fpm"
     image: "php:8.0-fpm-alpine"
     container_name: "${PROJECT_NAME}_php"
-    env_file: .env
+    env_file:
+      - .env
+      - api/.env
     depends_on:
       - "db"
     volumes:

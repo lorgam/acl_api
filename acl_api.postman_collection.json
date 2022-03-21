@@ -1,0 +1,1404 @@
+{
+	"info": {
+		"_postman_id": "6574e12c-2490-41d6-a853-9e98ac4edafb",
+		"name": "acl_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "V1",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"There are objects in the database\", function () { ",
+											"    pm.expect(jsonData).to.be.an(\"array\")",
+											"    pm.expect(jsonData.length).to.be.greaterThan(0)",
+											"});",
+											"",
+											"jsonData = jsonData[0];",
+											"pm.test(\"Category structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.description).to.be.a('string')",
+											"})",
+											"",
+											"pm.collectionVariables.set(\"category_id\", jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/category/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Category structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.description).to.be.a('string')",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/category/{{category_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"{{category_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Delete structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.deleted).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/category/{{category_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"{{category_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Category structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.description).to.be.a('string')",
+											"})",
+											"",
+											"pm.test(\"Category values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman category')",
+											"    pm.expect(jsonData.description).to.eql('Category created by Postman')",
+											"})",
+											"",
+											"pm.collectionVariables.set(\"category_id\", jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman category\",\n    \"description\" : \"Category created by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Category structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.description).to.be.a('string')",
+											"})",
+											"",
+											"pm.test(\"Category values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman category update')",
+											"    pm.expect(jsonData.description).to.eql('Category updated by Postman')",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman category update\",\n    \"description\" : \"Category updated by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/{{category_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"{{category_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/category/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/category/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category without name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\" : \"Category created by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category wrong data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 302,\n    \"description\" : \"Category created by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"description\" : \"Category updated by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category wrong data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": 23,\n    \"description\" : \"Category updated by Postman\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/category/{{category_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"category",
+										"{{category_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"There are objects in the database\", function () { ",
+											"    pm.expect(jsonData).to.be.an(\"array\")",
+											"    pm.expect(jsonData.length).to.be.greaterThan(0)",
+											"});",
+											"",
+											"jsonData = jsonData[0]",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.not.eql(undefined)",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.collectionVariables.set(\"product_id\", jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.not.eql(undefined)",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.null",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.test(\"Product values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman product')",
+											"    pm.expect(jsonData.price).to.eql(123.4)",
+											"    pm.expect(jsonData.currency).to.eql('EUR')",
+											"    pm.expect(jsonData.featured).to.be.false",
+											"})",
+											"",
+											"pm.collectionVariables.set(\"product_id\", jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product\",\n    \"price\" : 123.4,\n    \"currency\" : \"EUR\",\n    \"featured\" : false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.null",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.test(\"Product values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman updated product')",
+											"    pm.expect(jsonData.price).to.eql(56.78)",
+											"    pm.expect(jsonData.currency).to.eql('USD')",
+											"    pm.expect(jsonData.featured).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman updated product\",\n    \"price\" : 56.78,\n    \"currency\" : \"USD\",\n    \"featured\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Delete structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.deleted).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.an('object')",
+											"    pm.expect(jsonData.category.id).to.be.a('number')",
+											"    pm.expect(jsonData.category.name).to.be.a('string')",
+											"    pm.expect(jsonData.category.description).to.be.a('string')",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.test(\"Product values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman product with category')",
+											"    pm.expect(jsonData.category.id == pm.collectionVariables.get('category_id')).to.be.true",
+											"    pm.expect(jsonData.price).to.eql(9012)",
+											"    pm.expect(jsonData.currency).to.eql('EUR')",
+											"    pm.expect(jsonData.featured).to.be.true",
+											"})",
+											"",
+											"pm.collectionVariables.set(\"product_id\", jsonData.id)"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product with category\",\n    \"price\" : 9012,\n    \"category\" : {\n        \"id\" : {{category_id}}\n    },\n    \"currency\" : \"EUR\",\n    \"featured\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.an('object')",
+											"    pm.expect(jsonData.category.id).to.be.a('number')",
+											"    pm.expect(jsonData.category.name).to.be.a('string')",
+											"    pm.expect(jsonData.category.description).to.be.a('string')",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.test(\"Product values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman product with category')",
+											"    pm.expect(jsonData.category.id == pm.collectionVariables.get('category_id')).to.be.true",
+											"    pm.expect(jsonData.price).to.eql(9012)",
+											"    pm.expect(jsonData.currency).to.eql('EUR')",
+											"    pm.expect(jsonData.featured).to.be.false",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"category\" : {\n        \"id\" : {{category_id}}\n        },\n    \"featured\" : false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove category from product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"Product structure\", function () {",
+											"    pm.expect(jsonData).to.be.an('object')",
+											"    pm.expect(jsonData.id).to.be.a('number')",
+											"    pm.expect(jsonData.name).to.be.a('string')",
+											"    pm.expect(jsonData.category).to.be.null",
+											"    pm.expect(jsonData.price).to.be.a('number')",
+											"    pm.expect(jsonData.currency).to.be.a('string')",
+											"    pm.expect(jsonData.featured).to.be.a('boolean')",
+											"})",
+											"",
+											"pm.test(\"Product values\", function () {",
+											"    pm.expect(jsonData.name).to.eql('Postman updated product remove category')",
+											"    pm.expect(jsonData.price).to.eql(56.78)",
+											"    pm.expect(jsonData.currency).to.eql('USD')",
+											"    pm.expect(jsonData.featured).to.be.true",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman updated product remove category\",\n    \"price\" : 56.78,\n    \"category\" : {\n        \"id\" : null\n        },\n    \"currency\" : \"USD\",\n    \"featured\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Featured products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"",
+											"pm.test(\"There are featured products in the database\", function () { ",
+											"    pm.expect(jsonData).to.be.an(\"array\")",
+											"    pm.expect(jsonData.length).to.be.greaterThan(0)",
+											"})",
+											"",
+											"pm.test(\"There are featured products with EUR currency in the database\", function () { ",
+											"    let featuredEUR = jsonData.filter(product => product.currency == 'EUR')",
+											"    pm.expect(featuredEUR.length).to.be.greaterThan(0)",
+											"    pm.collectionVariables.set(\"featured_product_EUR\", featuredEUR[0])",
+											"})",
+											"",
+											"pm.test(\"There are featured products with USD currency in the database\", function () { ",
+											"    let featuredUSD = jsonData.filter(product => product.currency == 'USD')",
+											"    pm.expect(featuredUSD.length).to.be.greaterThan(0)",
+											"    pm.collectionVariables.set(\"featured_product_USD\", featuredUSD[0])",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/featured/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"featured",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Featured products EUR currency",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})",
+											"",
+											"var jsonData = pm.response.json()",
+											"var featuredEUR = pm.collectionVariables.get(\"featured_product_EUR\")",
+											"var featuredUSD = pm.collectionVariables.get(\"featured_product_USD\")",
+											"",
+											"pm.test(\"Checking currency conversion\", function () { ",
+											"    pm.expect(jsonData).to.be.an(\"array\")",
+											"    pm.expect(jsonData.length).to.be.greaterThan(0)",
+											"",
+											"    let checkEUR = jsonData.filter(product => product.id == featuredEUR.id)",
+											"    pm.expect(checkEUR.length).to.eql(1)",
+											"    pm.expect(checkEUR[0].id).to.eql(featuredEUR.id)",
+											"    pm.expect(checkEUR[0].price).to.eql(featuredEUR.price)",
+											"    pm.expect(checkEUR[0].currency).to.eql('EUR')",
+											"",
+											"    let checkUSD = jsonData.filter(product => product.id == featuredUSD.id)",
+											"    pm.expect(checkUSD.length).to.eql(1)",
+											"    pm.expect(checkUSD[0].id).to.eql(featuredUSD.id)",
+											"    pm.expect(checkUSD[0].price).to.not.eql(featuredUSD.price)",
+											"    pm.expect(checkUSD[0].currency).to.eql('EUR')",
+											"})",
+											"",
+											"pm.test(\"All currencies the same\", function () { ",
+											"    let notEUR = jsonData.filter(product => product.currency != 'EUR')",
+											"    pm.expect(notEUR.length).to.eql(0)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/featured?currency=EUR",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"featured"
+									],
+									"query": [
+										{
+											"key": "currency",
+											"value": "EUR"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/v1/product/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman updated product\",\n    \"price\" : 56.78,\n    \"currency\" : \"USD\",\n    \"featured\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wrong product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 204\", function () {",
+											"    pm.response.to.have.status(204)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman updated product\",\n    \"price\" : 56.78,\n    \"currency\" : \"USD\",\n    \"featured\" : true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/1000000",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"1000000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with bad data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product\",\n    \"currency\" : \"WER\",\n    \"price\" : \"PRE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with bad data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product\",\n    \"currency\" : \"WER\",\n    \"price\" : \"PRE\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with bad currency",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product\",\n    \"currency\" : \"WER\",\n    \"price\" : 23\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Product with bad currency",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\" : \"Postman product\",\n    \"currency\" : \"WER\",\n    \"price\" : 23\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/api/v1/product/{{product_id}}",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"product",
+										"{{product_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://acl_api.localhost"
+		},
+		{
+			"key": "category_id",
+			"value": "1"
+		},
+		{
+			"key": "product_id",
+			"value": "1"
+		},
+		{
+			"key": "featured_product_EUR",
+			"value": ""
+		},
+		{
+			"key": "featured_product_USD",
+			"value": ""
+		}
+	]
+}

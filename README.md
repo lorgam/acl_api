@@ -20,6 +20,8 @@ The code for the api is located in the api folder
 - `make phpv` to check the php version installed
 - `make install` to install composer packages and load the database with test data
 - `make c-install` to install composer packages
+- `make tests` to execute the tests
+- `make newman` to execute the Postman tests
 
 ### Commands for the symfony environment
 - `make sf-routes` to show the routes Symfony has registered
@@ -36,5 +38,7 @@ Symfony | 4.4
 Nginx | 1.21
 MariaDB | 10.6
 Traefik | 2.5
+NodeJs | 14.16.1
+Newman |
 XDebug |
 

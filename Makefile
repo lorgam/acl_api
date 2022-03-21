@@ -35,6 +35,7 @@ xdebug:
 	docker-compose exec php sh "/etc/xdebug_install.sh"
 
 install: c-install sf-migrate sf-load-fixtures
+tests: newman
 
 # Composer commands
 c-install:
@@ -58,4 +59,8 @@ sf-migrate:
 
 sf-load-fixtures:
 	docker-compose exec php bin/console doctrine:fixtures:load
+
+#Node commands
+newman:
+	docker-compose run node newman run /postman_tests.json
 

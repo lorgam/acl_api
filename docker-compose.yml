@@ -39,7 +39,6 @@ services:
 
   php:
     build: "./fpm"
-    image: "php:8.0-fpm-alpine"
     container_name: "${PROJECT_NAME}_php"
     env_file:
       - .env
@@ -70,6 +69,15 @@ services:
     networks:
       - "proxy"
       - "internal"
+
+  node:
+    build: "./node"
+    container_name: "${PROJECT_NAME}_node"
+    depends_on:
+      - "php"
+    volumes:
+      - "./acl_api.postman_collection.json:/postman_tests.json:ro"
+    network_mode: "host"
 
 volumes:
   logs-nginx:

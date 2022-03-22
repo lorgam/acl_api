@@ -1355,6 +1355,45 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Wrong Headers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/html",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/v1/category/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

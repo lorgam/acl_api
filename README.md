@@ -1,21 +1,29 @@
 # Test API
 
 ## Table of Contents
-1. [Configuration](#configuration)
-2. [API Description](#api-description)
+1. [Installation](#installation)
+2. [Configuration](#configuration)
+3. [API Description](#api-description)
     1. [Category](#category)
     2. [Product](#product)
-3. [Stack](#stack)
-4. [Pending](#pending)
+4. [Stack](#stack)
+5. [Pending](#pending)
+
+## Installation
+
+The API runs locally on docker compose containers and makes use of make commands to control the containers
+
+Create a file named `.env.local` in the `api/` folder and add the following line `EXCHANGERATES_API_KEY=<api_key_from_exchangerates.io>`, execute `make start` to start the machines and `make install` to load packages,  migrations and fixtures.
+You can execute `make tests` to make sure everything is working correctly
 
 ## Configuration
 
-The API runs locally on docker compose containers and makes use of make commands to control the containers, start the machine with `make start` and load the database with `make install`
+Start the containers with `make start` and stop them with `make stop`
 
 Access the web server at [`http://acl_api.localhost/`](http://acl_api.localhost/) and the router panel at [`http://localhost:8080/`](http://localhost:8080/)
 
-The file named `.env` in the root folder has the environment variables for the development machines, the variable named `PROJECT_NAME` contains the project name and is used for the local URL of the development server
-The variables whose value is `OverrideMeInLocal` like `EXCHANGERATES_API_KEY` need to be configured in a .env.local file inside the same folder of his .env file
+The are tow `.env` files, one in the root folder and another one on the api folder, the one in the root folder containse the environment variables for the development machines, the variable named `PROJECT_NAME` contains the project name and is used for the local URL of the development server.
+The variables whose value is `OverrideMeInLocal` need to be configured in a `.env.local` file inside the same folder of his .env file
 The code for the api is located in the api folder
 
 ### Commands for the development machines

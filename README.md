@@ -30,6 +30,63 @@ The code for the api is located in the api folder
 - `make sf-params` to show the parameters in use
 - `make sf-load-fixtures` to load the local data for development
 
+## API Description
+
+The API uses JSON representation for the items of the API, you have to use an Accept Header compatible with `application/json`.
+As an API REST it uses the HTTP verbs to define the behaviour of the API, `GET` for reading items, `POST` to create items, `DELETE` to delete items and `PUT` to update items.
+When a parameter is obligatory it is mandatory only on the `POST` request, the `PUT` request allows you to pudate only certain parts of the object
+
+### Entities
+
+#### Category
+
+JSON representation:
+<pre>
+{
+    "id": int,
+    "name": string,
+    "description": string
+}
+</pre>
+
+`name` and `description` are mandatory
+
+Endpoints
+- `/api/v1/category` Methods accepted:
+  - `GET` Returns an array of all the categories
+  - `POST` Creates the category and returns the category, if it has a problem with the data returns a 400 response
+- `/api/v1/category/{id}` if the category is not found it will return a 204 response. Methods accepted:
+  - `GET` Returns the category
+  - `DELETE` Deletes the category, returns a the current JSON if everything has gone right `{"deleted": true}`
+  - `PUT` Updates the category and returns the data of the category updated
+
+#### Product
+
+JSON representation:
+<pre>
+{
+    "id": int,
+    "name": string,
+    "category": Category,
+    "price": float,
+    "currency": string,
+    "featured": boolean
+}
+</pre>
+
+`name`, `price`, `currency` and `featured` are mandatory, `currency` can only take the values `EUR` o `USD`, in the methods `POST` and `PUT` `category` is an object only needs the id of the category as a parameter
+
+Endpoints
+- `/api/v1/product` Methods accepted:
+  - `GET` Returns an array of all the products
+  - `POST` Creates the product and returns the product, if it has a problem with the data returns a 400 response
+- `/api/v1/product/{id}` if the product is not found it will return a 204 response. Methods accepted:
+  - `GET` Returns the product
+  - `DELETE` Deletes the product, returns a the current JSON if everything has gone right `{"deleted": true}`
+  - `PUT` Updates the product and returns the data of the product updated
+- `/api/v1/product/featured?currency={currency}` `currency` is an optional parameter that can only be `EUR` or `USD`. Methods accepted:
+    - `GET` Returns an array of featured products, with the currencies converted to the currency specified by the `currency` paramater
+
 ## Stack
 
 Software | Version
@@ -39,7 +96,15 @@ Symfony | 4.4
 Nginx | 1.21
 MariaDB | 10.6
 Traefik | 2.5
-NodeJs | 14.16.1
+Node | 14.16.1
 Newman |
 XDebug |
 
+## Pending
+- Endpoint to obtain the products associated with a category
+- Automate tests for the commit command
+- Authentication
+- Better documentation (Maybe use nelmio/api-doc-bundle)
+- OPTIONS method
+- CORS Headers
+- Pagination

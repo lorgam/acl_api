@@ -39,12 +39,16 @@ The code for the api is located in the api folder
 - `make c-install` to install composer packages
 - `make tests` to execute the tests
 - `make newman` to execute the Postman tests
+- `make db-export` to export the database to a file named dump.sql in the root folder
+- `make db-import` to import the database from a file named dump.sql in the root folder
 
 ### Commands for the symfony environment
 - `make sf-routes` to show the routes Symfony has registered
 - `make sf-env` to show the environment variables in use
 - `make sf-params` to show the parameters in use
 - `make sf-load-fixtures` to load the local data for development
+- `make sf-dropdb` to drop the actual database
+- `make sf-createdb` to create the database
 
 ## API Description
 

@@ -15,9 +15,6 @@ restart: stop start
 logs:
 	docker-compose logs -f
 
-sql:
-	docker-compose exec db mysql -uroot -p$(MARIADB_ROOT_PASSWORD)
-
 ssh:
 	docker-compose exec php sh
 
@@ -36,6 +33,17 @@ xdebug:
 
 install: c-install sf-migrate sf-load-fixtures
 tests: newman
+
+# Databse commands
+sql:
+	docker-compose exec db mysql -uroot -p$(MARIADB_ROOT_PASSWORD)
+
+db-export:
+	docker-compose exec db mysqldump --all-databases -uroot -p$(MARIADB_ROOT_PASSWORD) > dump.sql
+
+db-import:
+	DB_ID=$$(docker-compose ps -q db); \
+	docker exec -i $$DB_ID sh -c 'exec mysql -uroot -p"$$MARIADB_ROOT_PASSWORD"' < dump.sql
 
 # Composer commands
 c-install:
@@ -59,6 +67,12 @@ sf-migrate:
 
 sf-load-fixtures:
 	docker-compose exec php bin/console doctrine:fixtures:load
+
+sf-dropdb:
+	docker-compose exec php bin/console doctrine:database:drop --force
+
+sf-createdb:
+	docker-compose exec php bin/console doctrine:database:create
 
 #Node commands
 newman:

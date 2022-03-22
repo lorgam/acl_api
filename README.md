@@ -1,5 +1,13 @@
 # Test API
 
+## Table of Contents
+1. [Configuration](#configuration)
+2. [API Description](#api-description)
+    1. [Category](#category)
+    2. [Product](#product)
+3. [Stack](#stack)
+4. [Pending](#pending)
+
 ## Configuration
 
 The API runs locally on docker compose containers and makes use of make commands to control the containers, start the machine with `make start` and load the database with `make install`
